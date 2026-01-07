@@ -9,15 +9,15 @@ public class Board {
 
     Board() {
         this.board = new char[3][3];
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             Arrays.fill(this.board[i], '0');
         }
     }
 
     public void displayBoard() {
         int val = 1;
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 if (board[i][j] == '0') {
                     System.out.print(val + " ");
                 } else {
@@ -29,16 +29,26 @@ public class Board {
         }
     }
 
-    public void insertMove(char move, int pos) {
+    public boolean insertMove(char move, int pos) {
+        if (pos < 1 || pos > 9) {
+            System.out.println("Invalid positon. Choose a position between 1 and 9.");
+            return false;
+        }
+
         int col = pos % 3 == 0 ? 2 : pos % 3 - 1;
         int row = pos % 3 == 0 ? pos / 3 - 1 : pos / 3;
-        if (board[row][col] == '0')
+        if (board[row][col] == '0') {
             board[row][col] = move;
+            return true;
+        } else {
+            System.out.println("Position already occupied. Choose a different position.");
+            return false;
+        }
     }
 
     public char checkStatus() {
         // check rows
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             if (board[i][0] != '0' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
                 return board[i][0];
             }
@@ -52,20 +62,22 @@ public class Board {
         }
 
         // check diagonals
-        if ((board[0][0] != '0' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-                (board[0][2] != '0' && board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
+        if ((board[0][0] != '0' && board[0][0] == board[1][1] && board[1][1] == board[2][2]))
             return board[0][0];
+        if ((board[0][2] != '0' && board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
+            return board[0][2];
         }
 
         // check for draw
         Map<Character, Integer> freq = new HashMap<>();
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 freq.put(board[i][j], freq.getOrDefault(board[i][j], 0) + 1);
             }
         }
 
-        if (freq.get('0') == 1) return 'D';
+        if (freq.get('0') == 0)
+            return 'D';
 
         // otherwise continue with the game
         return 'C';
