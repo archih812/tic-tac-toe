@@ -76,8 +76,8 @@ public class Board {
             }
         }
 
-        if (freq.get('0') == 0)
-            return 'D';
+        int emptyCount = freq.getOrDefault('0', 0);
+        if (emptyCount == 0) return 'D';
 
         // otherwise continue with the game
         return 'C';
