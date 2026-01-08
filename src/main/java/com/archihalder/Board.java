@@ -1,6 +1,5 @@
 package com.archihalder;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,25 +7,36 @@ public class Board {
     private final char[][] board;
 
     Board() {
+        // Initialize the board with numbers 1-9
         this.board = new char[3][3];
-        for (int i = 0; i < 3; i++) {
-            Arrays.fill(this.board[i], '0');
-        }
-    }
-
-    public void displayBoard() {
         int val = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == '0') {
-                    System.out.print(val + " ");
-                } else {
-                    System.out.print(board[i][j] + " ");
-                }
+                this.board[i][j] = (char) (val + '0');
                 val++;
             }
-            System.out.println();
         }
+    }
+    
+    public void displayBoard() {
+        // Display the board in a 3x3 matrix with borders
+        System.out.println("┌───┬───┬───┐");
+        for(int i = 0; i < 3; i++) {
+            System.out.print("│ ");
+            for(int j = 0; j < 3; j++) {
+                System.out.print(board[i][j]);
+                if (j < 2) {
+                    System.out.print(" │ ");
+                } else {
+                    System.out.print(" │");
+                }
+            }
+            System.out.println();
+            if (i < 2) {
+                System.out.println("├───┼───┼───┤");
+            }
+        }
+        System.out.println("└───┴───┴───┘");
     }
 
     public boolean insertMove(char move, int pos) {
