@@ -9,7 +9,7 @@ public class TicTacToe {
         Scanner sc = new Scanner(System.in);
         int choice = 0;
         while (true) {
-            board.displayBoard();
+            board.displayCurrentBoardStatus();
             System.out.println("Player with move: " + moves[choice]);
             System.out.print("Enter your position: ");
 
@@ -24,10 +24,11 @@ public class TicTacToe {
             if (!board.insertMove(moves[choice], pos))
                 continue;
             else {
-                if (board.checkStatus() == 'D') {
+                char currentStatus = board.checkStatus();
+                if (currentStatus == 'D') {
                     System.out.println("The game ended in draw");
                     break;
-                } else if (board.checkStatus() != 'C') {
+                } else if (currentStatus != 'C') {
                     System.out.println("Player: " + moves[choice] + " won the game");
                     break;
                 }

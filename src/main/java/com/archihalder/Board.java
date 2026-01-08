@@ -7,24 +7,26 @@ public class Board {
     private final char[][] board;
 
     Board() {
-        // Initialize the board with numbers 1-9
+        // Initialize the board with empty spaces
         this.board = new char[3][3];
-        int val = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                this.board[i][j] = (char) (val + '0');
-                val++;
+                this.board[i][j] = ' ';
             }
         }
     }
     
-    public void displayBoard() {
+    public void displayCurrentBoardStatus() {
         // Display the board in a 3x3 matrix with borders
         System.out.println("┌───┬───┬───┐");
         for(int i = 0; i < 3; i++) {
             System.out.print("│ ");
             for(int j = 0; j < 3; j++) {
-                System.out.print(board[i][j]);
+                if (board[i][j] == ' ') {  
+                    System.out.print(i * 3 + j + 1);
+                } else {
+                    System.out.print(board[i][j]);
+                }
                 if (j < 2) {
                     System.out.print(" │ ");
                 } else {
